@@ -1,0 +1,31 @@
+import random
+
+def is_valid(numbers):
+    numbers = sorted(numbers)
+
+    # 홀짝 3:3 유지
+    odd = sum(1 for n in numbers if n % 2 == 1)
+    even = 6 - odd
+    if not (odd == 3 and even == 3):
+        return False
+
+    # 연속 번호 3개 이상 금지
+    consecutive = 1
+    for i in range(1, len(numbers)):
+        if numbers[i] == numbers[i-1] + 1:
+            consecutive += 1
+            if consecutive >= 3:
+                return False
+        else:
+            consecutive = 1
+
+    return True
+
+def generate_strategic_lotto():
+    while True:
+        nums = random.sample(range(1, 46), 6)
+        if is_valid(nums):
+            return sorted(nums)
+
+for _ in range(5):
+    print(generate_strategic_lotto())
